@@ -12,22 +12,24 @@ import urllib.parse
 import json
 # first, the api url core
 
-apiurl= 'https://ipfind.co?='
+apiurl= 'https://maps.googleapis.com/maps/api/geocode/json?'
 # the client input that would be used for full url
-print('enter your ip address eg 8.8.8.8')
+print('enter address eg lhr')
 address = input()
 # completing the url
-completeurl = apiurl + urllib.parse.urlencode({'ip': address})
+completeurl = apiurl + urllib.parse.urlencode({'address': address})
 #  requesting for information using HTTp get method
 # the data returned is usually in json form thus 
-json_data = urllib.request.urlopen(completeurl).json()
+json_data = urllib.request.urlopen(completeurl)
+read_data = json.loads(json_data.read().decode('utf-8'))
 
-country = json_data['country']
+# status = read_data['status']
 
-languages = json_data['languages']
+# languages = read_data['languages']
 
 print()
+status= 'querry: ' + read_data['status']
+address = 'address:\n' + read_data['results'][0]['formatted_address']
+print(read_data['status'])
 
-print(country)
-
-print(languages)
+print(address)
